@@ -8,6 +8,24 @@ type Entry = {
 
 local Registry: { [Instance]: { [string]: Entry } } = {}
 
+--[[
+	Subscribe to an event on a given Instance with a given callback.
+ 
+	Example:
+	```lua
+		local unsubscribe = ConnectionHub.Subscribe(game:GetService("Players"), "PlayerAdded", function(player)
+			print(player.Name .. " joined!")
+		end)
+ 
+		-- later, if needed:
+		unsubscribe()
+	```
+ 
+	@param instance The Instance that owns the event (e.g. Players, a BasePart, a BindableEvent).
+	@param eventName The string name of the event property on that instance (e.g. "PlayerAdded", "Touched").
+	@param callback Function to run whenever the event fires. Receives whatever arguments the event fires with.
+	@return An unsubscribe function. Call it with no arguments to remove this listener.
+]]
 function ConnectionHub.Subscribe(instance: Instance, eventName: string, callback: (...any) -> ()): () -> ()
 	local instanceEntries = Registry[instance]
 
@@ -64,6 +82,22 @@ function ConnectionHub.Subscribe(instance: Instance, eventName: string, callback
 	end
 end
 
+--[[
+	Subscribe to an event, but only run the callback the next time it fires,
+	then automatically unsubscribe.
+ 
+	Example:
+	```lua
+		ConnectionHub.SubscribeOnce(workspace, "ChildAdded", function(child)
+			print("First child added:", child.Name)
+		end)
+	```	
+
+	@param instance The Instance that owns the event.
+	@param eventName The string name of the event property on that instance.
+	@param callback Function to run the first time the event fires.
+	@return An unsubscribe function, in case you want to cancel before it ever fires.
+]]
 function ConnectionHub.SubscribeOnce(instance: Instance, eventName: string, callback: (...any) -> ()): () -> ()
 	local unsubscribe: () -> ()
 
@@ -75,7 +109,16 @@ function ConnectionHub.SubscribeOnce(instance: Instance, eventName: string, call
 	return unsubscribe
 end
 
--- Debug function
+--[[
+	Returns how many listeners are currently subscribed to a given event on
+	a given instance, or 0 if there are none. Useful for debugging, tests,
+	or sanity-checking cleanup without exposing the internal registry
+	itself.
+ 
+	@param instance The Instance to check.
+	@param eventName The string name of the event to check.
+	@return The number of active listeners for that event.
+]]
 function ConnectionHub.GetListenerCount(instance: Instance, eventName: string): number
 	local instanceEntries = Registry[instance]
 	if not instanceEntries then
