@@ -73,7 +73,7 @@ cancel()
 local count = ConnectionHub.GetListenerCount(Players, "PlayerAdded")
 ```
 
-Returns `0` if nothing is currently subscribed to that event. This is the only way to inspect ConnectionHub's internal state from outside the module — there is no public registry table to read or write directly.
+Returns `0` if nothing is currently subscribed to that event. This is the only way to inspect ConnectionHub's internal state from outside the module: there is no public registry table to read or write directly.
 
 ## API
 
