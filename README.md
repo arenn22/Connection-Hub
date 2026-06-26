@@ -30,7 +30,7 @@ end)
 unsubscribe()
 ```
 
-Note that `Subscribe` takes the **instance** and the **event's name as a string**, not the event object itself (e.g. `Players, "PlayerAdded"`, not `Players.PlayerAdded`). See [Why instance + event name instead of the event itself](#why-instance--event-name-instead-of-the-event-itself) for the reason.
+Note that `Subscribe` takes the **instance** and the **event's name as a string**, not the event object itself (e.g. `Players, "PlayerAdded"`, not `Players.PlayerAdded`).
 
 ### Subscribing to a custom event
 
