@@ -90,10 +90,9 @@ Returns `0` if nothing is currently subscribed to that event. This is the only w
 - **Safe to subscribe or unsubscribe from within a listener.** Adding a new subscriber while an event is currently dispatching will not run that new subscriber until the next time the event fires. Removing a listener (including a listener removing itself) while the event is dispatching will not cause other listeners in that same dispatch to be skipped.
 - **Arguments are passed through as-is**, including multiple arguments and falsy values (`false`, `nil`), exactly as the underlying event provides them.
 
-## Design notes
+## Installation
 
-### Why instance + event name instead of the event itself
+Add the package in your dependencies with Wally:
+`connection-hub = "arenn22/connection-hub@1.0.0"`
 
-An earlier version of this module keyed its internal registry directly by the `RBXScriptSignal` object (e.g. `Players.PlayerAdded`). This turned out to be unreliable: in Luau, two accesses of the same event can compare equal with `==`, but do not reliably hash to the same slot when used as a table key. In practice this meant calling `Subscribe` on the same event multiple times could silently create multiple separate connections instead of sharing one, defeating the entire purpose of the module.
-
-The fix is to key the internal registry by the owning `Instance` and the event's name as a `string` instead. Both of these hash reliably as table keys in Luau. The actual event object is only ever read once, at the moment a connection needs to be created, and is never used as a key.
+Or manually install the file and add to your desired location (suggested to be in ReplicatedStorage)
