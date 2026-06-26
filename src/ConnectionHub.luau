@@ -6,7 +6,7 @@ type Entry = {
 	connection: RBXScriptConnection,
 }
 
-local Registry = {} :: { [Instance]: { [string]: Entry } }
+local Registry: { [Instance]: { [string]: Entry } } = {}
 
 function ConnectionHub.Subscribe(instance: Instance, eventName: string, callback: (...any) -> ()): () -> ()
 	local instanceEntries = Registry[instance]
