@@ -76,22 +76,12 @@ local count = ConnectionHub.GetListenerCount(Players, "PlayerAdded")
 Returns `0` if nothing is currently subscribed to that event. This is the only way to inspect ConnectionHub's internal state from outside the module: there is no public registry table to read or write directly.
 
 ## API
-
-### `ConnectionHub.Subscribe(instance: Instance, eventName: string, callback: (...any) -> ()): () -> ()`
-
-Subscribes `callback` to the named event on `instance`. If this is the first subscriber for that `(instance, eventName)` pair, ConnectionHub connects to the real event; otherwise it reuses the existing connection.
-
-Returns an unsubscribe function. Calling it removes this specific listener. Once the last listener for an event unsubscribes, the underlying connection is disconnected and all related bookkeeping is cleaned up automatically.
-
-Calling the returned unsubscribe function more than once is safe and has no effect after the first call.
-
-### `ConnectionHub.SubscribeOnce(instance: Instance, eventName: string, callback: (...any) -> ()): () -> ()`
-
-Same as `Subscribe`, except `callback` is automatically unsubscribed right after it runs for the first time. Returns an unsubscribe function you can call to cancel early, before the event has fired.
-
-### `ConnectionHub.GetListenerCount(instance: Instance, eventName: string): number`
-
-Returns the number of listeners currently subscribed to `eventName` on `instance` through ConnectionHub. Returns `0` if there are no listeners, including for events nothing has ever subscribed to.
+ 
+| Method | Returns | Description |
+|---|---|---|
+| `Subscribe(instance, eventName, callback)` | `() -> ()` | Subscribe to an event of `eventName` on `instance` with `callback`. Reuses an existing connection if one is already shared for this event, otherwise creates one. Returns an `unsubscribe` function. |
+| `SubscribeOnce(instance, eventName, callback)` | `() -> ()` | Like `Subscribe`, but automatically unsubscribes after the callback runs once. Returns an unsubscribe function you can call to cancel before it fires if needed. |
+| `GetListenerCount(instance, eventName)` | `number` | Returns how many listeners are currently subscribed to this event through EventBus. Returns `0` if there are none. Debug function |
 
 ## Behavior and guarantees
 
