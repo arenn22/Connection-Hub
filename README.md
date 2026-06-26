@@ -81,7 +81,7 @@ Returns `0` if nothing is currently subscribed to that event. This is the only w
 |---|---|---|
 | `Subscribe(instance, eventName, callback)` | `() -> ()` | Subscribe to an event of `eventName` on `instance` with `callback`. Reuses an existing connection if one is already shared for this event, otherwise creates one. Returns an `unsubscribe` function. |
 | `SubscribeOnce(instance, eventName, callback)` | `() -> ()` | Like `Subscribe`, but automatically unsubscribes after the callback runs once. Returns an unsubscribe function you can call to cancel before it fires if needed. |
-| `GetListenerCount(instance, eventName)` | `number` | Returns how many listeners are currently subscribed to this event through EventBus. Returns `0` if there are none. Debug function |
+| `GetListenerCount(instance, eventName)` | `number` | Returns how many listeners are currently subscribed to this event through ConnectionHub. Returns `0` if there are none. Debug function |
 
 ## Behavior and guarantees
 
