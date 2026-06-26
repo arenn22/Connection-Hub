@@ -22,7 +22,7 @@ function ConnectionHub.Subscribe(instance: Instance, eventName: string, callback
 		local signal = (instance :: any)[eventName]
 
 		if typeof(signal) ~= "RBXScriptSignal" then
-			error(`EventBus.Subscribe: "{eventName}" is not an event on {instance.Name}`)
+			error(`ConnectionHub.Subscribe: "{eventName}" is not an event on {instance.Name}`)
 		end
 
 		local newEntry = {} :: Entry
