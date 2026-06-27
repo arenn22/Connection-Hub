@@ -93,6 +93,6 @@ Returns `0` if nothing is currently subscribed to that event. This is the only w
 ## Installation
 
 Add the package in your dependencies with Wally:
-`connection-hub = "arenn22/connection-hub@1.0.0"`
+`connection-hub = "arenn22/connection-hub@1.0.3"`
 
 Or manually install the file and add to your desired location (suggested to be in ReplicatedStorage)
